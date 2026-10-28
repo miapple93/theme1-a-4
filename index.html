@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -5,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>【緊急シフトバイト募集アプリ】</title>
     <link rel="stylesheet" href="style.css" />
+
     <style>
       body {
         display: block;
@@ -59,12 +61,39 @@
         box-shadow: 0 8px 20px rgba(16, 185, 129, 0.18);
       }
 
-      #admin {
+      /* 最初は両方のページを非表示 */
+      #admin,
+      #employee {
         display: none;
+      }
+
+      /* 選択後は選択画面を非表示 */
+      body:has(#admin:target) .role-select,
+      body:has(#employee:target) .role-select {
+        display: none;
+      }
+
+      /* 選択されたページだけ表示 */
+      #admin:target,
+      #employee:target {
+        display: block;
+      }
+
+      /* 戻るボタン */
+      .back-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 20px;
+        background: #64748b;
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
       }
     </style>
   </head>
+
   <body>
+    <!-- 利用者選択画面 -->
     <section class="role-select" aria-label="利用者選択画面">
       <div class="role-select-card">
         <h2>利用者を選択してください</h2>
@@ -75,11 +104,15 @@
       </div>
     </section>
 
-    <section id="admin" aria-label="管理者用ページ">
+    <!-- 管理者用ページ -->
+    <section id="admin" class="app-card" aria-label="管理者用ページ">
       <h2>管理者用ページ</h2>
       <p>このページは準備中です。</p>
+
+      <a href="#" class="back-button">選択画面に戻る</a>
     </section>
 
+    <!-- 従業員用ページ -->
     <section id="employee" class="app-card" aria-label="従業員用ページ">
       <h1>【緊急シフトバイト募集アプリ】</h1>
 
@@ -92,6 +125,8 @@
 
       <p id="status-message" aria-live="polite"></p>
       <ul id="people-list"></ul>
+
+      <a href="#" class="back-button">選択画面に戻る</a>
     </section>
 
     <script src="app.js" defer></script>
