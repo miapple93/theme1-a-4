@@ -1,3 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
+
+:root {
+  --navy: #263858;
+  --blue: #6488e8;
+  --blue-dark: #4569c6;
+  --blue-light: #edf3ff;
+  --lavender: #f0efff;
+  --text: #34445f;
+  --muted: #8996ad;
+  --border: #e4eaf4;
+  --white: #ffffff;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -5,59 +19,115 @@
 body {
   margin: 0;
   min-height: 100vh;
+  padding: 40px 20px;
   display: grid;
   place-items: center;
-  font-family: sans-serif;
-  background: linear-gradient(135deg, #f3f7ff, #f9fafb);
-  color: #111827;
+  font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(ellipse at 10% 10%, #dce9ff 0%, transparent 38%),
+    radial-gradient(ellipse at 90% 90%, #e9e6ff 0%, transparent 38%),
+    linear-gradient(135deg, #f5f8ff, #f8f9ff 55%, #eff3ff);
 }
+
+/* メインカード */
 
 .app-card {
-  width: min(92vw, 540px);
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 20px;
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
-  padding: 32px 24px;
+  width: min(92vw, 700px);
+  padding: 36px 30px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 26px;
+  box-shadow:
+    0 24px 65px rgba(45, 66, 112, 0.11),
+    0 4px 14px rgba(45, 66, 112, 0.04);
 }
 
+/* タイトル */
+
 h1 {
-  margin: 0 0 24px;
-  font-size: clamp(1.5rem, 3vw, 2.3rem);
+  margin: 0 0 26px;
+  color: var(--navy);
+  font-size: clamp(25px, 4vw, 34px);
+  font-weight: 700;
   text-align: center;
-  line-height: 1.4;
+  line-height: 1.5;
+  letter-spacing: 1px;
 }
+
+/* 入力エリア */
 
 .input-row {
   display: flex;
   gap: 10px;
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 
 #people-input {
   flex: 1;
-  padding: 12px 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  font-size: 1rem;
+  min-width: 0;
+  padding: 14px 16px;
+  border: 1px solid #dce4f1;
+  border-radius: 12px;
+  outline: none;
+  background: #fbfcff;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
+#people-input::placeholder {
+  color: #a6b0c3;
+}
+
+#people-input:focus {
+  border-color: #83a2f0;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(100, 136, 232, 0.13);
+}
+
+/* 登録ボタン */
+
 #add-button {
+  padding: 13px 22px;
   border: none;
-  border-radius: 10px;
-  background: #2563eb;
+  border-radius: 12px;
   color: #fff;
-  padding: 12px 18px;
-  font-size: 1rem;
+  background: linear-gradient(135deg, #779bf1, #627fe0);
+  box-shadow: 0 5px 14px rgba(91, 119, 211, 0.22);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
 }
 
 #add-button:hover {
-  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 9px 20px rgba(91, 119, 211, 0.3);
+  filter: brightness(1.04);
 }
 
+#add-button:active {
+  transform: translateY(0);
+}
+
+#add-button:focus-visible {
+  outline: 3px solid #b8caff;
+  outline-offset: 3px;
+}
+
+/* 登録されたメンバー一覧 */
+
 #people-list {
+  width: 100%;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -65,28 +135,135 @@ h1 {
   gap: 10px;
 }
 
+/* li形式のリストをカード風にする */
+
 #people-list li {
-  background: #f3f4f6;
-  border-radius: 10px;
-  padding: 12px 14px;
-  font-size: 0.98rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 15px 18px;
+  border: 1px solid #e5eaf5;
+  border-radius: 13px;
+  background: linear-gradient(110deg, #f5f8ff, #fbfaff);
+  color: #354665;
+  font-size: 14px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+  box-shadow: 0 2px 6px rgba(50, 70, 110, 0.025);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+  animation: member-appear 0.3s ease both;
 }
 
-#status-message {
-  min-height: 1.5em;
-  margin: 0 0 12px;
-  font-size: 0.95rem;
-  color: #16a34a;
-  opacity: 0;
-  transition: opacity 0.2s ease;
+/* 左側のアクセントライン */
+
+#people-list li::before {
+  content: "";
+  align-self: stretch;
+  flex: 0 0 4px;
+  min-height: 25px;
+  margin: 0 2px 0 0;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #8aafff, #9d98ee);
 }
 
-#status-message.visible {
-  opacity: 1;
+/* ホバー時 */
+
+#people-list li:hover {
+  transform: translateY(-2px);
+  border-color: #cbd9fa;
+  background: linear-gradient(110deg, #eef4ff, #f5f2ff);
+  box-shadow: 0 7px 16px rgba(69, 97, 160, 0.08);
 }
 
-.registered-name {
-  color: #2563eb;
-  font-weight: 700;
-  border-left: 4px solid #2563eb;
+/* 登録直後の表示アニメーション */
+
+@keyframes member-appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* リンクやボタンが既存リスト内にある場合 */
+
+#people-list li button {
+  border: 1px solid #e0e7f4;
+  border-radius: 8px;
+  padding: 7px 11px;
+  color: #647ba8;
+  background: #fff;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#people-list li button:hover {
+  background: #edf3ff;
+}
+
+/* スマホ対応 */
+
+@media (max-width: 520px) {
+  body {
+    padding: 20px 12px;
+  }
+
+  .app-card {
+    width: 100%;
+    padding: 25px 17px;
+    border-radius: 21px;
+  }
+
+  h1 {
+    margin-bottom: 22px;
+    font-size: 25px;
+  }
+
+  .input-row {
+    gap: 8px;
+  }
+
+  #people-input {
+    padding: 12px 11px;
+    font-size: 13px;
+  }
+
+  #add-button {
+    padding: 12px 15px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  #people-list {
+    gap: 9px;
+  }
+
+  #people-list li {
+    min-height: 53px;
+    padding: 13px 12px;
+    border-radius: 11px;
+    font-size: 13px;
+  }
+}
+
+/* 動きを減らす設定への対応 */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
