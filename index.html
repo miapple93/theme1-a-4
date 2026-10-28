@@ -5,19 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>【緊急シフトバイト募集アプリ】</title>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        display: block;
+        padding: 0;
+      }
+
+      .role-select {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 32px 20px;
+        background: linear-gradient(135deg, #f3f7ff, #f9fafb);
+      }
+
+      .role-select-card {
+        width: min(92vw, 540px);
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+        padding: 32px 24px;
+        text-align: center;
+      }
+
+      .role-select h2 {
+        margin: 0 0 24px;
+        font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+        color: #111827;
+      }
+
+      .role-links {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .role-links a {
+        display: inline-block;
+        min-width: 170px;
+        padding: 16px 20px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        color: #fff;
+        background: linear-gradient(135deg, #2563eb, #3b82f6);
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+      }
+
+      .role-links a:last-child {
+        background: linear-gradient(135deg, #10b981, #34d399);
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.18);
+      }
+
+      #admin {
+        display: none;
+      }
+    </style>
   </head>
   <body>
-    <h1>【緊急シフトバイト募集アプリ】</h1>
+    <section class="role-select" aria-label="利用者選択画面">
+      <div class="role-select-card">
+        <h2>利用者を選択してください</h2>
+        <div class="role-links">
+          <a href="#admin">管理者用</a>
+          <a href="#employee">従業員用</a>
+        </div>
+      </div>
+    </section>
 
-    <div>
-      <label for="people-input">入力欄</label>
-      <br />
-      <input id="people-input" type="text" placeholder="名前を入力" />
-      <button id="add-button" type="button">OK</button>
-    </div>
+    <section id="admin" aria-label="管理者用ページ">
+      <h2>管理者用ページ</h2>
+      <p>このページは準備中です。</p>
+    </section>
 
-    <p id="status-message" aria-live="polite"></p>
-    <ul id="people-list"></ul>
+    <section id="employee" class="app-card" aria-label="従業員用ページ">
+      <h1>【緊急シフトバイト募集アプリ】</h1>
+
+      <div>
+        <label for="people-input">入力欄</label>
+        <br />
+        <input id="people-input" type="text" placeholder="名前を入力" />
+        <button id="add-button" type="button">OK</button>
+      </div>
+
+      <p id="status-message" aria-live="polite"></p>
+      <ul id="people-list"></ul>
+    </section>
 
     <script src="app.js" defer></script>
   </body>
