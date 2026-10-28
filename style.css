@@ -1,269 +1,184 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
 
-:root {
-  --navy: #263858;
-  --blue: #6488e8;
-  --blue-dark: #4569c6;
-  --blue-light: #edf3ff;
-  --lavender: #f0efff;
-  --text: #34445f;
-  --muted: #8996ad;
-  --border: #e4eaf4;
-  --white: #ffffff;
-}
-
-* {
-  box-sizing: border-box;
-}
-
+/* ===== 全体のデザイン ===== */
 body {
   margin: 0;
   min-height: 100vh;
-  padding: 40px 20px;
+  padding: 24px 16px;
+  box-sizing: border-box;
+
   display: grid;
   place-items: center;
-  font-family: 'DM Sans', 'Noto Sans JP', sans-serif;
-  color: var(--text);
-  background:
-    radial-gradient(ellipse at 10% 10%, #dce9ff 0%, transparent 38%),
-    radial-gradient(ellipse at 90% 90%, #e9e6ff 0%, transparent 38%),
-    linear-gradient(135deg, #f5f8ff, #f8f9ff 55%, #eff3ff);
+
+  background: linear-gradient(135deg, #eef4ff, #f3f8ff);
+  font-family: "Noto Sans JP", sans-serif;
+  color: #243451;
 }
 
-/* メインカード */
-
+/* ===== アプリ全体のカード ===== */
 .app-card {
-  width: min(92vw, 700px);
-  padding: 36px 30px;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  border-radius: 26px;
-  box-shadow:
-    0 24px 65px rgba(45, 66, 112, 0.11),
-    0 4px 14px rgba(45, 66, 112, 0.04);
+  width: 100%;
+  max-width: 520px;
+  padding: 30px 24px;
+  box-sizing: border-box;
+
+  background: #ffffff;
+  border: 2px solid #243b64;
+  border-radius: 22px;
+  box-shadow: 0 12px 32px rgba(36, 59, 100, 0.12);
 }
 
-/* タイトル */
-
+/* ===== タイトル ===== */
 h1 {
-  margin: 0 0 26px;
-  color: var(--navy);
-  font-size: clamp(25px, 4vw, 34px);
-  font-weight: 700;
-  text-align: center;
+  margin: 0 0 28px;
+  color: #243b64;
+  font-size: clamp(22px, 5vw, 32px);
   line-height: 1.5;
-  letter-spacing: 1px;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
-/* 入力エリア */
-
+/* ===== 入力欄とボタン ===== */
 .input-row {
   display: flex;
+  justify-content: center;
+  align-items: stretch;
   gap: 10px;
-  margin-bottom: 22px;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 #people-input {
   flex: 1;
   min-width: 0;
-  padding: 14px 16px;
-  border: 1px solid #dce4f1;
-  border-radius: 12px;
-  outline: none;
-  background: #fbfcff;
-  color: var(--text);
-  font-family: inherit;
-  font-size: 14px;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
-}
+  padding: 12px 14px;
+  box-sizing: border-box;
 
-#people-input::placeholder {
-  color: #a6b0c3;
+  border: 2px solid #c8d3e5;
+  border-radius: 10px;
+  outline: none;
+
+  font-size: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 #people-input:focus {
-  border-color: #83a2f0;
-  background: #fff;
-  box-shadow: 0 0 0 4px rgba(100, 136, 232, 0.13);
+  border-color: #243b64;
+  box-shadow: 0 0 0 3px rgba(36, 59, 100, 0.12);
 }
 
-/* 登録ボタン */
-
 #add-button {
-  padding: 13px 22px;
+  padding: 12px 18px;
   border: none;
-  border-radius: 12px;
-  color: #fff;
-  background: linear-gradient(135deg, #779bf1, #627fe0);
-  box-shadow: 0 5px 14px rgba(91, 119, 211, 0.22);
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 700;
+  border-radius: 10px;
+
+  background: #243b64;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
   cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    filter 0.2s ease;
+
+  transition: background 0.2s, transform 0.2s;
 }
 
 #add-button:hover {
+  background: #385582;
   transform: translateY(-2px);
-  box-shadow: 0 9px 20px rgba(91, 119, 211, 0.3);
-  filter: brightness(1.04);
 }
 
 #add-button:active {
   transform: translateY(0);
 }
 
-#add-button:focus-visible {
-  outline: 3px solid #b8caff;
-  outline-offset: 3px;
-}
-
-/* 登録されたメンバー一覧 */
-
+/* ===== 登録された人のリスト ===== */
 #people-list {
   width: 100%;
+  max-width: 420px;
+  margin: 24px auto;
+  padding: 12px;
+  box-sizing: border-box;
+
   list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 10px;
+  background: #ffffff;
+
+  /* 紺色のふちどり */
+  border: 2px solid #243b64;
+  border-radius: 18px;
+
+  box-shadow: 0 8px 24px rgba(36, 59, 100, 0.12);
 }
 
-/* li形式のリストをカード風にする */
-
+/* ===== リストの1人ずつ ===== */
 #people-list li {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 58px;
-  padding: 15px 18px;
-  border: 1px solid #e5eaf5;
-  border-radius: 13px;
-  background: linear-gradient(110deg, #f5f8ff, #fbfaff);
-  color: #354665;
-  font-size: 14px;
-  font-weight: 500;
+  margin: 8px 0;
+  padding: 14px 16px;
+  box-sizing: border-box;
+
+  background: #f3f6fc;
+  border: 1px solid #d5deed;
+  border-radius: 12px;
+
+  color: #243b64;
+  font-size: 16px;
+  text-align: center;
   overflow-wrap: anywhere;
-  box-shadow: 0 2px 6px rgba(50, 70, 110, 0.025);
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
-  animation: member-appear 0.3s ease both;
+
+  transition: transform 0.2s, box-shadow 0.2s;
 }
-
-/* 左側のアクセントライン */
-
-#people-list li::before {
-  content: "";
-  align-self: stretch;
-  flex: 0 0 4px;
-  min-height: 25px;
-  margin: 0 2px 0 0;
-  border-radius: 5px;
-  background: linear-gradient(180deg, #8aafff, #9d98ee);
-}
-
-/* ホバー時 */
 
 #people-list li:hover {
   transform: translateY(-2px);
-  border-color: #cbd9fa;
-  background: linear-gradient(110deg, #eef4ff, #f5f2ff);
-  box-shadow: 0 7px 16px rgba(69, 97, 160, 0.08);
+  box-shadow: 0 4px 12px rgba(36, 59, 100, 0.12);
 }
 
-/* 登録直後の表示アニメーション */
+/* ===== 登録完了メッセージ ===== */
+#message {
+  margin: 18px auto;
+  padding: 12px 16px;
+  box-sizing: border-box;
 
-@keyframes member-appear {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
+  color: #21834a;
+  background: #eaf8ee;
+  border: 1px solid #a9dfb8;
+  border-radius: 12px;
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
-/* リンクやボタンが既存リスト内にある場合 */
-
-#people-list li button {
-  border: 1px solid #e0e7f4;
-  border-radius: 8px;
-  padding: 7px 11px;
-  color: #647ba8;
-  background: #fff;
-  font-family: inherit;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-#people-list li button:hover {
-  background: #edf3ff;
-}
-
-/* スマホ対応 */
-
-@media (max-width: 520px) {
+/* ===== スマホ対応 ===== */
+@media (max-width: 480px) {
   body {
-    padding: 20px 12px;
+    padding: 16px 12px;
   }
 
   .app-card {
-    width: 100%;
-    padding: 25px 17px;
-    border-radius: 21px;
-  }
-
-  h1 {
-    margin-bottom: 22px;
-    font-size: 25px;
+    padding: 24px 16px;
+    border-radius: 18px;
   }
 
   .input-row {
     gap: 8px;
   }
 
-  #people-input {
-    padding: 12px 11px;
-    font-size: 13px;
-  }
-
   #add-button {
-    padding: 12px 15px;
-    font-size: 13px;
-    white-space: nowrap;
+    padding: 12px;
+    font-size: 14px;
   }
 
   #people-list {
-    gap: 9px;
+    max-width: 100%;
+    padding: 8px;
   }
 
   #people-list li {
-    min-height: 53px;
-    padding: 13px 12px;
-    border-radius: 11px;
-    font-size: 13px;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  #message {
+    font-size: 14px;
   }
 }
 
-/* 動きを減らす設定への対応 */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
