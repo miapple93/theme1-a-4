@@ -1,3 +1,4 @@
+
 const button = document.getElementById('add-button');
 const input = document.getElementById('people-input');
 const list = document.getElementById('people-list');
@@ -11,6 +12,7 @@ const adminStatus = document.getElementById('admin-status');
 const recruitmentInfo = document.getElementById('recruitment-info');
 
 const STORAGE_KEY = 'recruitmentInfo';
+const PEOPLE_STORAGE_KEY = 'registeredPeople';
 
 // 登録完了メッセージ
 const showStatusMessage = (message) => {
@@ -69,7 +71,7 @@ const displayRecruitment = () => {
 };
 
 // 管理者が募集内容を登録する
-if (saveButton) {
+if (saveButton && dateInput && startInput && endInput) {
     saveButton.addEventListener('click', () => {
 
         const date = dateInput.value;
@@ -77,14 +79,18 @@ if (saveButton) {
         const end = endInput.value;
 
         if (!date || !start || !end) {
-            adminStatus.textContent =
-                '日付と開始・終了時間を入力してください。';
+            if (adminStatus) {
+                adminStatus.textContent =
+                    '日付と開始・終了時間を入力してください。';
+            }
             return;
         }
 
         if (start >= end) {
-            adminStatus.textContent =
-                '終了時間は開始時間より後にしてください。';
+            if (adminStatus) {
+                adminStatus.textContent =
+                    '終了時間は開始時間より後にしてください。';
+            }
             return;
         }
 
@@ -99,7 +105,9 @@ if (saveButton) {
             JSON.stringify(recruitmentData)
         );
 
-        adminStatus.textContent = '募集内容を登録しました！';
+        if (adminStatus) {
+            adminStatus.textContent = '募集内容を登録しました！';
+        }
 
         displayRecruitment();
     });
@@ -110,6 +118,71 @@ if (!button || !input || !list) {
     console.error('必要な要素が見つかりません。HTMLのIDを確認してください。');
 } else {
 
+    // 保存された名前を読み込む
+    let people = [];
+
+    try {
+        people = JSON.parse(
+            localStorage.getItem(PEOPLE_STORAGE_KEY) || '[]'
+        );
+
+        if (!Array.isArray(people)) {
+            people = [];
+        }
+    } catch (error) {
+        people = [];
+    }
+
+    // 名前を保存する
+    const savePeople = () => {
+        localStorage.setItem(
+            PEOPLE_STORAGE_KEY,
+            JSON.stringify(people)
+        );
+    };
+
+    // 出勤可能者一覧を表示する
+    const displayPeople = () => {
+        list.replaceChildren();
+
+        people.forEach((name, index) => {
+
+            const li = document.createElement('li');
+            li.classList.add('registered-name');
+
+            // 名前を表示する
+            const span = document.createElement('span');
+            span.textContent = name;
+
+            // 削除ボタンを作成する
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = '削除';
+            deleteButton.type = 'button';
+            deleteButton.classList.add('delete-button');
+
+            // 削除ボタンを押したとき
+            deleteButton.addEventListener('click', () => {
+
+                // 指定した名前を削除
+                people.splice(index, 1);
+
+                // 削除後の一覧を保存
+                savePeople();
+
+                // 一覧を再表示
+                displayPeople();
+
+                showStatusMessage(`${name}を削除しました。`);
+            });
+
+            // 名前と削除ボタンを一覧に追加
+            li.appendChild(span);
+            li.appendChild(deleteButton);
+            list.appendChild(li);
+        });
+    };
+
+    // 名前を追加する
     const addPerson = () => {
 
         const name = input.value.trim();
@@ -118,11 +191,14 @@ if (!button || !input || !list) {
             return;
         }
 
-        const li = document.createElement('li');
-        li.textContent = name;
-        li.classList.add('registered-name');
+        // 名前を配列に追加
+        people.push(name);
 
-        list.appendChild(li);
+        // 名前を保存
+        savePeople();
+
+        // 一覧を更新
+        displayPeople();
 
         showStatusMessage(`${name}を登録しました。`);
 
@@ -130,11 +206,33 @@ if (!button || !input || !list) {
         input.focus();
     };
 
+    // OKボタンで登録
     button.addEventListener('click', addPerson);
 
+    // Enterキーで登録
     input.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             addPerson();
+        }
+    });
+
+    // ページを開いたときに保存済みの名前を表示
+    displayPeople();
+
+    // 別タブで名前が変更された場合も更新
+    window.addEventListener('storage', (event) => {
+        if (event.key === PEOPLE_STORAGE_KEY) {
+            try {
+                people = JSON.parse(event.newValue || '[]');
+
+                if (!Array.isArray(people)) {
+                    people = [];
+                }
+            } catch (error) {
+                people = [];
+            }
+
+            displayPeople();
         }
     });
 }
@@ -145,7 +243,7 @@ displayRecruitment();
 // ページ切り替え時に更新
 window.addEventListener('hashchange', displayRecruitment);
 
-// 別タブで変更された場合も更新
+// 別タブで募集情報が変更された場合も更新
 window.addEventListener('storage', (event) => {
     if (event.key === STORAGE_KEY) {
         displayRecruitment();
