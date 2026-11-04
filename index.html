@@ -107,7 +107,30 @@
     <!-- 管理者用ページ -->
     <section id="admin" class="app-card" aria-label="管理者用ページ">
       <h2>管理者用ページ</h2>
-      <p>このページは準備中です。</p>
+      <p>募集する日付と時間を設定してください。</p>
+
+      <div>
+        <label for="recruit-date">募集日</label>
+        <br />
+        <input id="recruit-date" type="date" />
+        <br /><br />
+
+        <label for="start-time">開始時間</label>
+        <br />
+        <input id="start-time" type="time" />
+        <br /><br />
+
+        <label for="end-time">終了時間</label>
+        <br />
+        <input id="end-time" type="time" />
+        <br /><br />
+
+        <button id="save-recruitment" type="button">
+          募集内容を登録
+        </button>
+
+        <p id="admin-status" aria-live="polite"></p>
+      </div>
 
       <a href="#" class="back-button">選択画面に戻る</a>
     </section>
@@ -115,6 +138,11 @@
     <!-- 従業員用ページ -->
     <section id="employee" class="app-card" aria-label="従業員用ページ">
       <h1>【緊急シフトバイト募集アプリ】</h1>
+
+      <!-- 管理者が設定した募集内容 -->
+      <div id="recruitment-info">
+        <p>現在、募集情報はありません。</p>
+      </div>
 
       <div>
         <label for="people-input">入力欄</label>
@@ -124,6 +152,7 @@
       </div>
 
       <p id="status-message" aria-live="polite"></p>
+
       <h2>出勤可能者一覧</h2>
       <ul id="people-list"></ul>
 
@@ -133,3 +162,4 @@
     <script src="app.js" defer></script>
   </body>
 </html>
+
